@@ -8,34 +8,72 @@ import {Page,
         Cell,
         CellHeader,
         CellBody,
-        CellFooter
+        CellFooter,
+        SearchBar
 } from 'react-weui';
 import Core from '../Core';
+import axios from 'axios';
+import Config from '../../../Config';
 
 class DeviceList extends React.Component {
 
     constructor(props){
         super(props);
 
-        this.state = {};
+        const config = new Config();
+        const user = JSON.parse(window.localStorage.getItem('user'));
+
+
+        this.state = {
+            shopperId: user.id,
+            items: [],
+            baseUrl: config.baseUrl
+        };
+    }
+
+    componentWillMount() {
+        axios.get(this.state.baseUrl + 'device/items', {
+            shopperId: this.state.shopperId
+        })
+            .then(response => {
+                console.log(response);
+                this.setState({
+                    items: response.data
+                });
+            })
+            .catch(response => {
+
+            });
+    }
+
+    openDeviceDetail(id){
+        window.location = '/shopper/device-detail/' + id;
+    }
+
+    changeSearch(){
+
     }
 
     render() {
         return (
             <Core>
-                <Cells>
-                    <Cell>
-                        <CellBody>Purifier 123</CellBody>
-                        <CellFooter>Room1</CellFooter>
-                    </Cell>
-                    <Cell>
-                        <CellBody>Purifier 124</CellBody>
-                        <CellFooter>Room2</CellFooter>
-                    </Cell>
-                    <Cell>
-                        <CellBody>Purifier 125</CellBody>
-                        <CellFooter>Room2</CellFooter>
-                    </Cell>
+                <SearchBar
+                    onChange={this.changeSearch.bind(this)}
+                    defaultValue={this.state.searchText}
+                    placeholder="Purifiers Name or MAC or Room Search"
+                    lang={{
+                        cancel: 'Cancel'
+                    }}
+                />
+                <Cells style={{paddingBottom: '100px'}}>
+                    {this.state.items.map((item, key) => {
+                        return (
+                            <Cell key={key} access onClick={(id) => this.openDeviceDetail(item.id)}>
+                                <CellBody>{item.name}</CellBody>
+                                <CellFooter>{item.room}</CellFooter>
+                            </Cell>
+                        );
+                    })}
                 </Cells>
             </Core>
         );

@@ -2,3 +2,4 @@
 node_modules/
 build/
 task.txt
+src/Config.js

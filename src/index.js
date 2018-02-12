@@ -28,6 +28,7 @@ import ConsumerBuyTimeSlots from './pages/consumer/buy_time/TimeSlots';
 
 //shopper pages
 import ShopperDeviceList from './pages/shopper/device/DeviceList';
+import ShopperDeviceDetail from './pages/shopper/device/DeviceDetail';
 import ShopperStatementList from './pages/shopper/statement/StatementList';
 
 
@@ -60,6 +61,7 @@ class Index extends React.Component {
                         <Route exact path="/consumer/buy-time-slots" component={ConsumerBuyTimeSlots}/>
 
                         <Route exact path="/shopper/device-list" component={ShopperDeviceList}/>
+                        <Route exact path="/shopper/device-detail/:id" component={ShopperDeviceDetail}/>
                         <Route exact path="/shopper/statement-list" component={ShopperStatementList}/>
                     </div>
                 </Router>

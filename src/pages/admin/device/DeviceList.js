@@ -8,7 +8,8 @@ import {Page,
         Cell,
         CellHeader,
         CellBody,
-        CellFooter
+        CellFooter,
+        SearchBar
 } from 'react-weui';
 import axios from 'axios';
 import Config from '../../../Config';
@@ -43,9 +44,21 @@ class DeviceList extends React.Component {
         window.location = '/admin/device-detail/' + id;
     }
 
+    changeSearch(){
+
+    }
+
     render() {
         return (
             <Core>
+                <SearchBar
+                    onChange={this.changeSearch.bind(this)}
+                    defaultValue={this.state.searchText}
+                    placeholder="Purifiers Name or MAC or Room Search"
+                    lang={{
+                        cancel: 'Cancel'
+                    }}
+                />
                 <Cells style={{paddingBottom: '100px'}}>
                     {this.state.items.map((item, key) => {
                         return (

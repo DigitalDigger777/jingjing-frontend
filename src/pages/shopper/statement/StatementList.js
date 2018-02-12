@@ -2,6 +2,8 @@
  * Created by korman on 06.02.18.
  */
 import React from 'react';
+import injectSheet from 'react-jss';
+
 import {Page,
         Panel,
         PanelHeader,
@@ -10,119 +12,91 @@ import {Page,
         FlexItem,
         Cells,
         Cell,
-        CellBody
+        CellBody,
+
+        SearchBar,
+        Preview, PreviewHeader, PreviewFooter, PreviewBody, PreviewItem
 } from 'react-weui';
 import Core from '../Core';
+import axios from 'axios';
+import Config from '../../../Config';
 
+const styles = {
+    page: {
+        backgroundColor: '#EEE',
+        paddingBottom: '100px'
+    }
+};
 
+@injectSheet(styles)
 
 export default class StatementList extends React.Component {
 
     constructor(props){
         super(props);
 
-        this.state = {};
+        const config = new Config();
+        const user = JSON.parse(window.localStorage.getItem('user'));
+
+        this.state = {
+            shopperId: user.id,
+            items: [],
+            baseUrl: config.baseUrl
+        };
+    }
+
+    componentWillMount(){
+        axios.get(this.state.baseUrl + 'statement/items', {
+            params: {
+                shopperId: this.state.shopperId
+            }
+        })
+            .then(response => {
+                this.setState({
+                    items: response.data
+                });
+            })
+            .catch(response => {
+
+            });
+    }
+
+    changeSearch(){
+
     }
 
     render() {
+        const {classes, children} = this.props;
+
         return (
             <Core>
-                <Panel>
+                <SearchBar
+                    onChange={this.changeSearch.bind(this)}
+                    defaultValue={this.state.searchText}
+                    placeholder="Statement Search"
+                    lang={{
+                        cancel: 'Cancel'
+                    }}
+                />
+                <Panel className={classes.page}>
 
                     <PanelBody>
-                        <Cells>
-                            <Cell>
-                                <CellBody>
-                                    Income ¥12.00
-                                </CellBody>
-                            </Cell>
-                            <Cell>
-                                <CellBody>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Time: 2018/01/23 22:31</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Hours: 4</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Rate: ¥3.00 per hour</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Room #: 18</div>
-                                        </FlexItem>
-                                    </Flex>
-                                </CellBody>
-                            </Cell>
-                        </Cells>
-                        <Cells>
-                            <Cell>
-                                <CellBody>
-                                    Income ¥12.00
-                                </CellBody>
-                            </Cell>
-                            <Cell>
-                                <CellBody>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Time: 2018/01/23 22:31</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Hours: 4</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Rate: ¥3.00 per hour</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Room #: 18</div>
-                                        </FlexItem>
-                                    </Flex>
-                                </CellBody>
-                            </Cell>
-                        </Cells>
-                        <Cells>
-                            <Cell>
-                                <CellBody>
-                                    Income ¥12.00
-                                </CellBody>
-                            </Cell>
-                            <Cell>
-                                <CellBody>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Time: 2018/01/23 22:31</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Hours: 4</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Rate: ¥3.00 per hour</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Room #: 18</div>
-                                        </FlexItem>
-                                    </Flex>
-                                </CellBody>
-                            </Cell>
-                        </Cells>
+                        {this.state.items.map((item, key) => {
+                            return (
+                                <Preview key={key} style={{marginBottom: '20px'}}>
+                                    <PreviewHeader>
+                                        <PreviewItem label="Income" value={`¥` + item[0].amount}/>
+                                    </PreviewHeader>
+                                    <PreviewBody>
+                                        <PreviewItem label="Time" value={item.date}/>
+                                        <PreviewItem label="Hours" value={item[0].hours.toString()}/>
+                                        <PreviewItem label="Rate" value={`¥` + item[0].rate + ` per hour`}/>
+                                        <PreviewItem label="Room #" value={item[0].room.toString()}/>
+                                    </PreviewBody>
+                                    <PreviewFooter/>
+                                </Preview>
+                            );
+                        })}
                     </PanelBody>
                 </Panel>
             </Core>

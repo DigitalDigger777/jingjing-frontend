@@ -44,14 +44,12 @@ export default class DeviceDetail extends React.Component {
                 id: 0,
                 is_enabled: false,
                 mac: '',
-                name: '',
-                shopperId: ''
+                name: ''
             },
             shopper: '',
             baseUrl: config.baseUrl
         };
         this.changeName = this.changeName.bind(this);
-        this.changeShopper = this.changeShopper.bind(this);
     }
 
     componentWillMount() {
@@ -77,21 +75,10 @@ export default class DeviceDetail extends React.Component {
 
     }
 
-    changeShopper(e){
-
-        const item = this.state.item;
-        item.shopperId = e.target.value;
-
-        this.setState({
-            item: item
-        });
-    }
-
     save(){
         axios.post(this.state.baseUrl + 'device/save', {
             id: this.state.item.id,
-            name: this.state.item.name,
-            shopperId: this.state.item.shopperId
+            name: this.state.item.name
         })
             .then(response => {
                 console.log(response);
@@ -106,6 +93,7 @@ export default class DeviceDetail extends React.Component {
 
         return (
             <Core>
+                <CellsTitle>Purifiers Detail</CellsTitle>
                 <Form>
                     <FormCell>
                         <CellHeader>
@@ -113,14 +101,6 @@ export default class DeviceDetail extends React.Component {
                         </CellHeader>
                         <CellBody>
                             <Input type="text" placeholder="Enter Room" value={this.state.item.name} onChange={ e => this.changeName(e)}/>
-                        </CellBody>
-                    </FormCell>
-                    <FormCell>
-                        <CellHeader>
-                            <Label style={{color: '#999999', marginRight: '10px'}}>Shopper ID</Label>
-                        </CellHeader>
-                        <CellBody>
-                            <Input type="text" placeholder="Enter Shopper #" value={this.state.item.shopperId} onChange={ e => this.changeShopper(e)}/>
                         </CellBody>
                     </FormCell>
                     <FormCell>

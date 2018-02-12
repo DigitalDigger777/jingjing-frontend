@@ -2,7 +2,7 @@
  * Created by korman on 07.02.18.
  */
 import React from 'react';
-import {Page, Form, FormCell, CellHeader, CellBody, Label, Input, Button} from 'react-weui';
+import {Page, Form, FormCell, CellHeader, CellBody, Label, Input, Button, Toast} from 'react-weui';
 import axios from 'axios';
 import Config from '../Config';
 
@@ -22,11 +22,12 @@ export default class Login extends React.Component {
 
     constructor(props){
         super(props);
-        console.log('ssd');
+
         const config = new Config();
         this.state = {
             email: '',
             password: '',
+            showError: false,
             baseUrl: config.baseUrl
         };
 
@@ -59,6 +60,15 @@ export default class Login extends React.Component {
             })
             .catch(response => {
                 console.log(response);
+                this.setState({
+                    showError: true
+                });
+
+                setTimeout(() => {
+                    this.setState({
+                        showError: false
+                    });
+                }, 3000);
             });
 
         //window.location = 'shopper/device-list';
@@ -106,6 +116,7 @@ export default class Login extends React.Component {
                         </CellBody>
                     </FormCell>
                 </Form>
+                <Toast icon="warn" show={this.state.showError}>Incorrect User or Password</Toast>
             </Page>
         );
     };

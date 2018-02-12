@@ -12,7 +12,8 @@ import {Page,
     Form,
     FormCell,
     Input,
-    Button
+    Button,
+    SearchBar
 } from 'react-weui';
 import Core from '../Core';
 import axios from 'axios';
@@ -51,22 +52,35 @@ export default class ShopperList extends React.Component {
         window.location = '/admin/shopper-detail/' + id;
     }
 
+    openFormShopper(){
+        window.location = '/admin/shopper-form';
+    }
+
+    save(){
+        axios.post();
+    }
+
+    changeSearch(){
+
+    }
+
     render() {
         return (
             <Core>
-                <Form>
-                    <FormCell>
-                        <CellBody>
-                            <Input type="text" placeholder="Input Shopper Name or Shopper #"/>
-                        </CellBody>
-                    </FormCell>
-                    <FormCell>
-                        <CellBody>
-                            <Button>Search</Button>
-                        </CellBody>
-                    </FormCell>
-                </Form>
+                <SearchBar
+                    onChange={this.changeSearch.bind(this)}
+                    defaultValue={this.state.searchText}
+                    placeholder="Shopper Name or # Search"
+                    lang={{
+                        cancel: 'Cancel'
+                    }}
+                />
                 <Cells>
+                    <Cell>
+                        <CellBody>
+                            <Button type="primary" plain onClick={() => this.openFormShopper() }>Add Shopper</Button>
+                        </CellBody>
+                    </Cell>
                     { this.state.items.map((item, key) =>
                         <Cell key={key} access onClick={ id => this.openDetailShopper(item.id) }>
                             <CellBody>{item.name}</CellBody>

@@ -13,13 +13,38 @@ import {Page,
     CellBody
 } from 'react-weui';
 import Core from '../Core';
+import axios from 'axios';
+import Config from '../../../Config';
+
 
 export default class BuyHistory extends React.Component {
 
     constructor(props){
         super(props);
+        const config = new Config();
+        const user = JSON.parse(window.localStorage.getItem('user'));
 
-        this.state = {};
+        this.state = {
+            consumerId: user.id,
+            items: [],
+            baseUrl: config.baseUrl
+        };
+    }
+
+    componentWillMount(){
+        axios.get(this.state.baseUrl + 'statement/items', {
+            params: {
+                consumerId: this.state.consumerId
+            }
+        })
+            .then(response => {
+                this.setState({
+                    items: response.data
+                });
+            })
+            .catch(response => {
+
+            });
     }
 
     render() {
@@ -28,114 +53,46 @@ export default class BuyHistory extends React.Component {
                 <Panel>
 
                     <PanelBody>
-                        <Cells>
-                            <Cell>
-                                <CellBody>
-                                    Paid ¥12.00
-                                </CellBody>
-                            </Cell>
-                            <Cell>
-                                <CellBody>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Time: 2018/01/23 22:31</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Hours: 4</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Rate: ¥3.00 per hour</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Shoppe: ABC Shopper</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Room #: 18</div>
-                                        </FlexItem>
-                                    </Flex>
-                                </CellBody>
-                            </Cell>
-                        </Cells>
-                        <Cells>
-                            <Cell>
-                                <CellBody>
-                                    Paid ¥12.00
-                                </CellBody>
-                            </Cell>
-                            <Cell>
-                                <CellBody>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Time: 2018/01/23 22:31</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Hours: 4</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Rate: ¥3.00 per hour</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Shoppe: ABC Shopper</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Room #: 18</div>
-                                        </FlexItem>
-                                    </Flex>
-                                </CellBody>
-                            </Cell>
-                        </Cells>
-                        <Cells>
-                            <Cell>
-                                <CellBody>
-                                    Paid ¥12.00
-                                </CellBody>
-                            </Cell>
-                            <Cell>
-                                <CellBody>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Time: 2018/01/23 22:31</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Hours: 4</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Rate: ¥3.00 per hour</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Shoppe: ABC Shopper</div>
-                                        </FlexItem>
-                                    </Flex>
-                                    <Flex>
-                                        <FlexItem>
-                                            <div>Room #: 18</div>
-                                        </FlexItem>
-                                    </Flex>
-                                </CellBody>
-                            </Cell>
-                        </Cells>
+                        {this.state.items.map((item, key) => {
+                            return(
+                                <Cells key={key}>
+                                    <Cell>
+                                        <CellBody>
+                                            Paid ¥{item[0].amount}
+                                        </CellBody>
+                                    </Cell>
+                                    <Cell>
+                                        <CellBody>
+                                            <Flex>
+                                                <FlexItem>
+                                                    <div>Time: {item.date}</div>
+                                                </FlexItem>
+                                            </Flex>
+                                            <Flex>
+                                                <FlexItem>
+                                                    <div>Hours: {item[0].hours}</div>
+                                                </FlexItem>
+                                            </Flex>
+                                            <Flex>
+                                                <FlexItem>
+                                                    <div>Rate: ¥{item[0].rate} per hour</div>
+                                                </FlexItem>
+                                            </Flex>
+                                            <Flex>
+                                                <FlexItem>
+                                                    <div>Shoppe: {item.name}</div>
+                                                </FlexItem>
+                                            </Flex>
+                                            <Flex>
+                                                <FlexItem>
+                                                    <div>Room #: {item[0].room}</div>
+                                                </FlexItem>
+                                            </Flex>
+                                        </CellBody>
+                                    </Cell>
+                                </Cells>
+                            )
+                        })}
                     </PanelBody>
                 </Panel>
             </Core>
