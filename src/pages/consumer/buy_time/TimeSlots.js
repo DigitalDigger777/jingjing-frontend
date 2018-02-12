@@ -15,6 +15,10 @@ const styles  = {
         paddingBottom: '50px',
         border: '2px solid #b3d9ff',
         borderRadius: '5px'
+    },
+    page: {
+        backgroundColor: '#EEE',
+        paddingBottom: '100px'
     }
 };
 
@@ -72,6 +76,7 @@ export default class TimeSlots extends React.Component {
     }
 
     render() {
+        const {classes, children} = this.props;
 
         return (
             <Core>
@@ -85,7 +90,7 @@ export default class TimeSlots extends React.Component {
                         </CellBody>
                     </Cell>
                 </Cells>
-                <Grids data={this.state.data}/>
+                <Grids className={classes.page} data={this.state.data}/>
             </Core>
         );
     };
