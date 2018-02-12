@@ -15,12 +15,16 @@ import {Page,
 import Core from '../Core';
 import axios from 'axios';
 import Config from '../../../Config';
+import Auth from '../Auth';
 
 
 export default class BuyHistory extends React.Component {
 
     constructor(props){
         super(props);
+        const auth = new Auth();
+        auth.checkAuth();
+
         const config = new Config();
         const user = JSON.parse(window.localStorage.getItem('user'));
 

@@ -6,6 +6,7 @@ import {Grids, Cells, Cell, CellBody, CellHeader} from 'react-weui';
 import Core from '../Core';
 import axios from 'axios';
 import Config from '../../../Config';
+import Auth from '../Auth';
 
 import injectSheet from 'react-jss';
 
