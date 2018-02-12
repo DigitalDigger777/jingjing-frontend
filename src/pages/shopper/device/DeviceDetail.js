@@ -15,6 +15,7 @@ import {Page,
         Input,
         Button
 } from 'react-weui';
+import QRCode from 'qrcode.react';
 import axios from 'axios';
 import Config from '../../../Config';
 import Core from '../Core';
@@ -109,6 +110,11 @@ export default class DeviceDetail extends React.Component {
                         </CellHeader>
                         <CellBody>
                             <Input type="text" disabled  value={this.state.item.mac} />
+                        </CellBody>
+                    </FormCell>
+                    <FormCell>
+                        <CellBody>
+                            <QRCode value="test" size="128"/>
                         </CellBody>
                     </FormCell>
                     <FormCell>
