@@ -48,6 +48,7 @@ export default class DeviceDetail extends React.Component {
                 name: ''
             },
             shopper: '',
+            QRUrl: config.baseFrontUrl + 'consumer/buy-time-slots/' + (typeof props.match.params.id != 'undefined' ? props.match.params.id : 0),
             baseUrl: config.baseUrl
         };
         this.changeName = this.changeName.bind(this);
@@ -114,7 +115,7 @@ export default class DeviceDetail extends React.Component {
                     </FormCell>
                     <FormCell>
                         <CellBody>
-                            <QRCode value="test" size="128"/>
+                            <QRCode value={this.state.QRUrl} size="128"/>
                         </CellBody>
                     </FormCell>
                     <FormCell>
