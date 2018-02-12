@@ -27,6 +27,8 @@ export default class Core extends React.Component {
             }
         };
 
+        const regForDeviceDetail = /\/shopper\/device-detail\/[0-9]+/;
+
         switch (location)
         {
             case '/shopper/device-list':
@@ -35,6 +37,10 @@ export default class Core extends React.Component {
             case '/shopper/statement-list':
                     this.state.menuItems.statement = 'weui-bar__item_on';
                 break;
+        }
+
+        if (regForDeviceDetail.test(location)) {
+            this.state.menuItems.purifiers = 'weui-bar__item_on';
         }
     }
 

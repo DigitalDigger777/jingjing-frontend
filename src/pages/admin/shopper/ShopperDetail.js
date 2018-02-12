@@ -20,6 +20,16 @@ import Core from '../Core';
 import axios from 'axios';
 import Config from '../../../Config';
 
+import injectSheet from 'react-jss';
+
+const styles  = {
+    cells: {
+        marginTop: '0px'
+    }
+};
+
+@injectSheet(styles)
+
 export default class ShopperDetail extends React.Component {
 
     constructor(props){
@@ -61,6 +71,8 @@ export default class ShopperDetail extends React.Component {
     }
 
     render() {
+        const {classes, children} = this.props;
+
         if (this.state.item) {
             return (
                 <Core>
@@ -70,25 +82,25 @@ export default class ShopperDetail extends React.Component {
                             <CellFooter>{this.state.item.name}</CellFooter>
                         </Cell>
                     </Cells>
-                    <Cells>
+                    <Cells className={classes.cells}>
                         <Cell>
                             <CellBody>Address</CellBody>
                             <CellFooter>{this.state.item.address}</CellFooter>
                         </Cell>
                     </Cells>
-                    <Cells>
+                    <Cells className={classes.cells}>
                         <Cell>
                             <CellBody>Contact</CellBody>
                             <CellFooter>{this.state.item.contact}</CellFooter>
                         </Cell>
                     </Cells>
-                    <Cells>
+                    <Cells className={classes.cells}>
                         <Cell>
                             <CellBody>Cell</CellBody>
                             <CellFooter>{this.state.item.cell}</CellFooter>
                         </Cell>
                     </Cells>
-                    <Cells>
+                    <Cells className={classes.cells}>
                         <Cell>
                             <CellBody>Shopper #</CellBody>
                             <CellFooter>{this.state.item.id}</CellFooter>

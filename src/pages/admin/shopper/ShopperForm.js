@@ -7,6 +7,17 @@ import Core from '../Core';
 import axios from 'axios';
 import Config from '../../../Config';
 
+import injectSheet from 'react-jss';
+
+const styles  = {
+    cells: {
+        marginTop: '0px'
+    }
+};
+
+@injectSheet(styles)
+
+
 export default class ShopperForm extends React.Component {
 
     constructor(props){
@@ -115,6 +126,7 @@ export default class ShopperForm extends React.Component {
     }
 
     render() {
+        const {classes, children} = this.props;
 
         return (
             <Core>

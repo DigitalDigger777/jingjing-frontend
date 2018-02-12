@@ -27,6 +27,9 @@ export default class Core extends React.Component {
             }
         };
 
+        const regForShopperDetail = /\/admin\/shopper-detail\/[0-9]+/;
+        const regForDeviceDetail = /\/admin\/device-detail\/[0-9]+/;
+
         switch (location)
         {
             case '/admin/shopper-list':
@@ -41,6 +44,14 @@ export default class Core extends React.Component {
             case '/admin/invoice-list':
                     this.state.menuItems.invoice = 'weui-bar__item_on';
                 break;
+        }
+
+        if (regForShopperDetail.test(location)) {
+            this.state.menuItems.shoppers = 'weui-bar__item_on';
+        }
+
+        if (regForDeviceDetail.test(location)) {
+            this.state.menuItems.purifiers = 'weui-bar__item_on';
         }
     }
 
