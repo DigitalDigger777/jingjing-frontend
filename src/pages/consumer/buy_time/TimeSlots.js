@@ -2,8 +2,10 @@
  * Created by korman on 06.02.18.
  */
 import React from 'react';
-import {Grids} from 'react-weui';
+import {Grids, Cells, Cell, CellBody, CellHeader} from 'react-weui';
 import Core from '../Core';
+import axios from 'axios';
+import Config from '../../../Config';
 
 import injectSheet from 'react-jss';
 
@@ -40,16 +42,49 @@ export default class TimeSlots extends React.Component {
             {label: '￥36 12小时', style: styles.grid}
         ];
 
+        const config = new Config();
+
         this.state = {
-            data: data
+            deviceId: typeof props.match.params.deviceId != 'undefined' ? props.match.params.deviceId : 0,
+            data: data,
+            item: {
+                shopperId: 0,
+                shopperName: '',
+                room: 0
+            },
+            baseUrl: config.baseUrl
         };
     }
 
+    componentWillMount(){
+        if (this.state.deviceId != 0) {
+            axios.get(this.state.baseUrl + 'device/load/' + this.state.deviceId)
+                .then(response => {
+                    console.log(response);
+                    this.setState({
+                        item: response.data
+                    });
+                })
+                .catch(response => {
+                    console.log(response);
+                });
+        }
+    }
 
     render() {
 
         return (
             <Core>
+                <Cells>
+                    <Cell>
+                        <CellBody style={{textAlign: 'center'}}>
+                            <p style={{fontWeight: 'bold'}}>请选择需要的时间</p>
+                            <p>{this.state.item.shopperName}</p>
+                            <p>Room: {this.state.item.room}</p>
+                            <p>￥3 一小时</p>
+                        </CellBody>
+                    </Cell>
+                </Cells>
                 <Grids data={this.state.data}/>
             </Core>
         );

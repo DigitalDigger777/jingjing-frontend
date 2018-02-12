@@ -59,6 +59,7 @@ class Index extends React.Component {
                         <Route exact path="/consumer/buy-history" component={ConsumerBuyHistory}/>
                         <Route exact path="/consumer/buy-time-confirmation-select-slot" component={ConsumerConfirmationSelectSlot}/>
                         <Route exact path="/consumer/buy-time-slots" component={ConsumerBuyTimeSlots}/>
+                        <Route exact path="/consumer/buy-time-slots/:deviceId" component={ConsumerBuyTimeSlots}/>
 
                         <Route exact path="/shopper/device-list" component={ShopperDeviceList}/>
                         <Route exact path="/shopper/device-detail/:id" component={ShopperDeviceDetail}/>
