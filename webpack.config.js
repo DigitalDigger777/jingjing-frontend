@@ -87,11 +87,11 @@ module.exports = {
             // Don't precache sourcemaps (they're large) and build asset manifest:
             staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
         }),
-        // new CopyWebpackPlugin([
-        //     { from: '../public/order.php', to: '../build/order.php' },
-        //     { from: '../public/payment.php', to: '../build/payment.php' },
-        //     { from: '../public/test_site.php', to: '../build/test_site.php' }
-        // ])
+        new CopyWebpackPlugin([
+            { from: '../public/home.html', to: '../build/home.html' },
+            // { from: '../public/payment.php', to: '../build/payment.php' },
+            // { from: '../public/test_site.php', to: '../build/test_site.php' }
+        ])
     ],
     output: {
         path: __dirname + '/build',

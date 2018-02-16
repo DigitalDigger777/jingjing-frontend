@@ -8,11 +8,11 @@ export default class Auth
         const user = JSON.parse(window.localStorage.getItem('user'));
 
         if (!user) {
-            window.location = '/';
+            window.location = '/shopper/login';
         }
 
         if (user && user.role != 'ROLE_SHOPPER') {
-            window.location = '/';
+            window.location = '/shopper/login';
         }
     }
 }
