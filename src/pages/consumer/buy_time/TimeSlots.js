@@ -33,18 +33,18 @@ export default class TimeSlots extends React.Component {
     constructor(props){
         super(props);
         const data = [
-            {label: '￥3 1小时', style: styles.grid},
-            {label: '￥6 2小时', style: styles.grid},
-            {label: '￥9 3小时', style: styles.grid},
-            {label: '￥12 4小时', style: styles.grid},
-            {label: '￥15 5小时', style: styles.grid},
-            {label: '￥18 6小时', style: styles.grid},
-            {label: '￥21 7小时', style: styles.grid},
-            {label: '￥24 8小时', style: styles.grid},
-            {label: '￥27 9小时', style: styles.grid},
-            {label: '￥30 10小时', style: styles.grid},
-            {label: '￥33 11小时', style: styles.grid},
-            {label: '￥36 12小时', style: styles.grid}
+            {label: '￥3 1小时', style: styles.grid, onClick: hours => this.buyTime(1)},
+            {label: '￥6 2小时', style: styles.grid, onClick: hours => this.buyTime(2)},
+            {label: '￥9 3小时', style: styles.grid, onClick: hours => this.buyTime(3)},
+            {label: '￥12 4小时', style: styles.grid, onClick: hours => this.buyTime(4)},
+            {label: '￥15 5小时', style: styles.grid, onClick: hours => this.buyTime(5)},
+            {label: '￥18 6小时', style: styles.grid, onClick: hours => this.buyTime(6)},
+            {label: '￥21 7小时', style: styles.grid, onClick: hours => this.buyTime(7)},
+            {label: '￥24 8小时', style: styles.grid, onClick: hours => this.buyTime(8)},
+            {label: '￥27 9小时', style: styles.grid, onClick: hours => this.buyTime(9)},
+            {label: '￥30 10小时', style: styles.grid, onClick: hours => this.buyTime(10)},
+            {label: '￥33 11小时', style: styles.grid, onClick: hours => this.buyTime(11)},
+            {label: '￥36 12小时', style: styles.grid, onClick: hours => this.buyTime(12)}
         ];
 
         const config = new Config();
@@ -57,17 +57,43 @@ export default class TimeSlots extends React.Component {
                 shopperName: '',
                 room: 0
             },
+            showPage: false,
             baseUrl: config.baseUrl
         };
+
+        this.buyTime = this.buyTime.bind(this);
     }
 
     componentWillMount(){
+        //check consumer login
+        const userStorage = window.localStorage.getItem('user');
+        window.localStorage.setItem('timeSlots', JSON.stringify({'deviceId':this.state.deviceId}));
+
+        if (userStorage) {
+            const user = JSON.parse(userStorage);
+
+            if (user.role != 'ROLE_CONSUMER') {
+
+                window.location = '/consumer/login';
+
+            }
+
+        } else {
+
+            window.location = '/consumer/login';
+
+        }
+
         if (this.state.deviceId != 0) {
             axios.get(this.state.baseUrl + 'device/load/' + this.state.deviceId)
                 .then(response => {
                     console.log(response);
                     this.setState({
                         item: response.data
+                    });
+                    window.localStorage.removeItem('timeSlots');
+                    this.setState({
+                        showPage: true
                     });
                 })
                 .catch(response => {
@@ -76,23 +102,46 @@ export default class TimeSlots extends React.Component {
         }
     }
 
+    buyTime(hours) {
+        axios.get(this.state.baseUrl + 'add-schedule', {
+            params: {
+                mac: this.state.item.mac,
+                interval: hours * 60
+            }
+        })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(response => {
+                console.log(response);
+            });
+    }
+
     render() {
         const {classes, children} = this.props;
 
-        return (
-            <Core>
-                <Cells>
-                    <Cell>
-                        <CellBody style={{textAlign: 'center'}}>
-                            <p style={{fontWeight: 'bold'}}>请选择需要的时间</p>
-                            <p>{this.state.item.shopperName}</p>
-                            <p>Room: {this.state.item.room}</p>
-                            <p>￥3 一小时</p>
-                        </CellBody>
-                    </Cell>
-                </Cells>
-                <Grids className={classes.page} data={this.state.data}/>
-            </Core>
-        );
+        if (this.state.showPage) {
+            return (
+                <Core>
+                    <Cells>
+                        <Cell>
+                            <CellBody style={{textAlign: 'center'}}>
+                                <p style={{fontWeight: 'bold'}}>请选择需要的时间</p>
+                                <p>{this.state.item.shopperName}</p>
+                                <p>Room: {this.state.item.room}</p>
+                                <p>￥3 一小时</p>
+                            </CellBody>
+                        </Cell>
+                    </Cells>
+                    <Grids className={classes.page} data={this.state.data}/>
+                </Core>
+            );
+        } else {
+            return (
+                <Core>
+                    Load...
+                </Core>
+            );
+        }
     };
 }

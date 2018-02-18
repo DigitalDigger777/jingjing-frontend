@@ -48,13 +48,21 @@ export default class Login extends React.Component {
                 switch (role)
                 {
                     case 'ROLE_ADMIN':
-                            window.location = 'admin/shopper-list';
+                            window.location = '/admin/shopper-list';
                         break;
                     case 'ROLE_CONSUMER':
-                            window.location = 'consumer/buy-time-slots';
+                            const timeSlotsStorage = window.localStorage.getItem('timeSlots');
+                            const timeSlots = JSON.parse(timeSlotsStorage);
+
+                            if (timeSlotsStorage) {
+                                window.location = '/consumer/buy-time-slots/' + timeSlots.deviceId;
+                            } else {
+                                window.location = '/consumer/buy-history';
+                            }
+
                         break;
                     case 'ROLE_SHOPPER':
-                            window.location = 'shopper/device-list';
+                            window.location = '/shopper/device-list';
                         break;
                 }
             })
