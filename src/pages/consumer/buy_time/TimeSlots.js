@@ -111,6 +111,7 @@ export default class TimeSlots extends React.Component {
         })
             .then(response => {
                 console.log(response);
+                window.location = '/consumer/buy-time-confirmation-select-slot';
             })
             .catch(response => {
                 console.log(response);
