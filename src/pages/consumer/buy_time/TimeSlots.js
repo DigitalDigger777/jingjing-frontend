@@ -111,6 +111,10 @@ export default class TimeSlots extends React.Component {
         })
             .then(response => {
                 console.log(response);
+                window.localStorage.setItem('lastBuy', JSON.stringify({
+                    'timeStart': response.data.timeStart,
+                    'timeEnd':   response.data.timeEnd
+                }));
                 window.location = '/consumer/buy-time-confirmation-select-slot';
             })
             .catch(response => {

@@ -3,7 +3,7 @@
  */
 import React from 'react';
 
-import {Page, Icon} from 'react-weui';
+import {Page, Icon, Panel, PanelBody} from 'react-weui';
 
 const IconBox = (props) => (
     <div className="icon-box">
@@ -19,17 +19,26 @@ export default class ConfirmationSelectSlot extends React.Component {
 
     constructor(props){
         super(props);
+        const lastBuy = JSON.parse(window.localStorage.getItem('lastBuy'));
 
-        this.state = {};
+        this.state = {
+            lastBuy: lastBuy
+        };
     }
 
     render() {
         return (
             <Page>
-                <IconBox
-                    icon={<Icon size="large" value="success"/>}
-                    title="You can turn on Purifier"
-                    desc="The expire time is 2018/01/22  22:17"/>
+                <Panel>
+
+                    <PanelBody style={{ padding: '10px'}}>
+                        <IconBox
+                            icon={<Icon size="large" value="success"/>}
+                            title="You can turn on Purifier"
+                            desc={`The expire time is ` + this.state.lastBuy.timeEnd}
+                            />
+                    </PanelBody>
+                </Panel>
             </Page>
         );
     };
