@@ -5,7 +5,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 //weui
 import 'weui/dist/style/weui.css';
@@ -42,6 +42,7 @@ class Index extends React.Component {
 
     render(){
         return(
+            <MuiThemeProvider>
                 <Router history={history}>
                     <div>
                         {/*<Route exact path="/" component={Login}/>*/}
@@ -68,6 +69,7 @@ class Index extends React.Component {
                         <Route exact path="/shopper/statement-list" component={ShopperStatementList}/>
                     </div>
                 </Router>
+            </MuiThemeProvider>
         );
     }
 }

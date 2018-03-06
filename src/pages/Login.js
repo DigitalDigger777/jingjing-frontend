@@ -2,7 +2,12 @@
  * Created by korman on 07.02.18.
  */
 import React from 'react';
-import {Page, Form, FormCell, CellHeader, CellBody, Label, Input, Button, Toast} from 'react-weui';
+// import {Page, Form, FormCell, CellHeader, CellBody, Label, Input, Button, Toast} from 'react-weui';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
+
 import axios from 'axios';
 import Config from '../Config';
 
@@ -10,9 +15,22 @@ import injectSheet from 'react-jss';
 
 const styles  = {
     loginForm: {
+        textAlign: 'center',
+        padding: '30px',
         position: 'absolute',
-        width: '100%',
-        top: '30%'
+        height: '98%',
+        width: '98%',
+        '& .containerLoginForm': {
+            padding: '30px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginTop: '150px'
+        },
+        '& .snackBar': {
+            top: 0,
+            bottom: 'auto',
+            left: (window.innerWidth - 288) / 2
+        }
     }
 };
 
@@ -27,12 +45,34 @@ export default class Login extends React.Component {
         this.state = {
             email: '',
             password: '',
-            showError: false,
+            error: {
+                open: false,
+                message: ''
+            },
             baseUrl: config.baseUrl
         };
 
+        this.error = this.error.bind(this);
         this.changeEmail = this.changeEmail.bind(this);
         this.changePassword = this.changePassword.bind(this);
+    }
+
+    error(message){
+        this.setState({
+            error: {
+                open: true,
+                message: message
+            }
+        });
+
+        setTimeout(() => {
+            this.setState({
+                error: {
+                    open: false,
+                    message: ''
+                }
+            });
+        }, 3000);
     }
 
     login(){
@@ -66,17 +106,9 @@ export default class Login extends React.Component {
                         break;
                 }
             })
-            .catch(response => {
-                console.log(response);
-                this.setState({
-                    showError: true
-                });
-
-                setTimeout(() => {
-                    this.setState({
-                        showError: false
-                    });
-                }, 3000);
+            .catch(error => {
+                console.log(error.response);
+                this.error(error.response.data.message);
             });
 
         //window.location = 'shopper/device-list';
@@ -100,32 +132,26 @@ export default class Login extends React.Component {
         const {classes, children} = this.props;
 
         return (
-            <Page transition={true} infiniteLoader={true} ptr={false}>
-                <Form className={classes.loginForm}>
-                    <FormCell>
-                        <CellHeader>
-                            <Label>Email</Label>
-                        </CellHeader>
-                        <CellBody>
-                            <Input type="email" placeholder="Enter Email" onChange={ e => this.changeEmail(e)}/>
-                        </CellBody>
-                    </FormCell>
-                    <FormCell>
-                        <CellHeader>
-                            <Label>Password</Label>
-                        </CellHeader>
-                        <CellBody>
-                            <Input type="password" placeholder="Password" onChange={ e => this.changePassword(e)}/>
-                        </CellBody>
-                    </FormCell>
-                    <FormCell>
-                        <CellBody>
-                            <Button onClick={this.login.bind(this)}>Login</Button>
-                        </CellBody>
-                    </FormCell>
-                </Form>
-                <Toast icon="warn" show={this.state.showError}>Incorrect User or Password</Toast>
-            </Page>
+            <Paper className={classes.loginForm}>
+                <Paper className="containerLoginForm" zDepth={4}>
+                    <div>
+                        <TextField hintText="Enter Email" onChange={ e => this.changeEmail(e)}/>
+                    </div>
+                    <div>
+                        <TextField hintText="Enter Password" type="password"  onChange={ e => this.changePassword(e)}/>
+                    </div>
+                    <div>
+                        <RaisedButton label="Login" primary={true} onClick={this.login.bind(this)}/>
+                    </div>
+                </Paper>
+                <Snackbar
+                    className="snackBar"
+                    open={this.state.error.open}
+                    message={this.state.error.message}
+                    autoHideDuration={4000}
+                    onRequestClose={this.handleRequestClose}
+                />
+            </Paper >
         );
     };
 }

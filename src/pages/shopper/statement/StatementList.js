@@ -14,9 +14,20 @@ import {Page,
         Cell,
         CellBody,
 
-        SearchBar,
         Preview, PreviewHeader, PreviewFooter, PreviewBody, PreviewItem
 } from 'react-weui';
+
+import {
+    Table,
+    TableBody,
+    TableHeader,
+    TableHeaderColumn,
+    TableRow,
+    TableRowColumn,
+} from 'material-ui/Table';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import SearchBar from 'material-ui-search-bar'
+
 import Core from '../Core';
 import axios from 'axios';
 import Config from '../../../Config';
@@ -70,14 +81,20 @@ export default class StatementList extends React.Component {
 
         return (
             <Core>
-                <SearchBar
-                    onChange={this.changeSearch.bind(this)}
-                    defaultValue={this.state.searchText}
-                    placeholder="Statement Search"
-                    lang={{
-                        cancel: 'Cancel'
-                    }}
-                />
+                <Toolbar>
+                    <ToolbarGroup style={{width: '100%'}}>
+                        <SearchBar
+                            onChange={this.changeSearch.bind(this)}
+                            onRequestSearch={() => console.log('onRequestSearch')}
+                            defaultValue={this.state.searchText}
+
+                            style={{
+                                margin: '0 auto',
+                                width: '100%'
+                            }}
+                        />
+                    </ToolbarGroup>
+                </Toolbar>
                 <Panel className={classes.page}>
 
                     <PanelBody>

@@ -2,15 +2,27 @@
  * Created by korman on 06.02.18.
  */
 import React from 'react';
-import {Page,
-        Cells,
-        CellsTitle,
-        Cell,
-        CellHeader,
-        CellBody,
-        CellFooter,
-        SearchBar
-} from 'react-weui';
+// import {Page,
+//         Cells,
+//         CellsTitle,
+//         Cell,
+//         CellHeader,
+//         CellBody,
+//         CellFooter,
+//         SearchBar
+// } from 'react-weui';
+import {
+    Table,
+    TableBody,
+    TableHeader,
+    TableHeaderColumn,
+    TableRow,
+    TableRowColumn,
+} from 'material-ui/Table';
+//import RaisedButton from 'material-ui/RaisedButton';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import SearchBar from 'material-ui-search-bar'
+
 import Core from '../Core';
 import axios from 'axios';
 import Config from '../../../Config';
@@ -57,24 +69,32 @@ class DeviceList extends React.Component {
     render() {
         return (
             <Core>
-                <SearchBar
-                    onChange={this.changeSearch.bind(this)}
-                    defaultValue={this.state.searchText}
-                    placeholder="Purifiers Name or MAC or Room Search"
-                    lang={{
-                        cancel: 'Cancel'
-                    }}
-                />
-                <Cells style={{paddingBottom: '100px'}}>
-                    {this.state.items.map((item, key) => {
-                        return (
-                            <Cell key={key} access onClick={(id) => this.openDeviceDetail(item.id)}>
-                                <CellBody>{item.name}</CellBody>
-                                <CellFooter>{item.room}</CellFooter>
-                            </Cell>
-                        );
-                    })}
-                </Cells>
+                <Toolbar>
+                    <ToolbarGroup style={{width: '100%'}}>
+                        <SearchBar
+                            onChange={this.changeSearch.bind(this)}
+                            onRequestSearch={() => console.log('onRequestSearch')}
+                            defaultValue={this.state.searchText}
+
+                            style={{
+                                margin: '0 auto',
+                                width: '100%'
+                            }}
+                        />
+                    </ToolbarGroup>
+                </Toolbar>
+                <Table selectable={false}>
+                    <TableBody displayRowCheckbox={false} showRowHover={true}>
+                        {this.state.items.map((item, key) => {
+                            return (
+                                <TableRow key={key} onClick={ id => this.openDeviceDetail(item.id) }>
+                                    <TableRowColumn>{item.name}</TableRowColumn>
+                                    <TableRowColumn>{item.room}</TableRowColumn>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
             </Core>
         );
     };
