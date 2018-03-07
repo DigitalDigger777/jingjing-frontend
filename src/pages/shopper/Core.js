@@ -15,7 +15,8 @@ const styles  = {
     }
 };
 
-const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>;
+const attachMoney = <FontIcon className="material-icons">attach_money</FontIcon>;
+const deviceHub = <FontIcon className="material-icons">device_hub</FontIcon>;
 
 @injectSheet(styles)
 
@@ -66,19 +67,21 @@ export default class Core extends React.Component {
             <Paper>
                 <Paper>
                     {this.props.children}
+
+                    <BottomNavigation selectedIndex={this.state.selectedIndex} style={{position: 'fixed', bottom: '0px'}}>
+                        <BottomNavigationItem
+                            label="Massages List"
+                            icon={deviceHub}
+                            onClick={this.openPurifierList.bind(this)}
+                        />
+                        <BottomNavigationItem
+                            label="Statement"
+                            icon={attachMoney}
+                            onClick={this.openStatement.bind(this)}
+                        />
+                    </BottomNavigation>
                 </Paper>
-                <BottomNavigation selectedIndex={this.state.selectedIndex}>
-                    <BottomNavigationItem
-                        label="Purifiers"
-                        icon={recentsIcon}
-                        onClick={this.openPurifierList.bind(this)}
-                    />
-                    <BottomNavigationItem
-                        label="Statement"
-                        icon={recentsIcon}
-                        onClick={this.openPurifierList.bind(this)}
-                    />
-                </BottomNavigation>
+
             </Paper>
         );
     }
