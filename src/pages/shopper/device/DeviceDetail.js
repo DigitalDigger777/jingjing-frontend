@@ -95,7 +95,9 @@ export default class DeviceDetail extends React.Component {
 
         return (
             <Core>
-                <CellsTitle>Purifiers Detail</CellsTitle>
+                <CellsTitle>
+                    <h1 style={{margin: '0 auto', marginBottom: '20px'}}>Massage Detail</h1>
+                </CellsTitle>
                 <Form>
                     <FormCell>
                         <CellHeader>
@@ -115,7 +117,7 @@ export default class DeviceDetail extends React.Component {
                     </FormCell>
                     <FormCell>
                         <CellBody>
-                            <QRCode value={this.state.QRUrl} size="128"/>
+                            <QRCode value={this.state.QRUrl} size={`128`}/>
                         </CellBody>
                     </FormCell>
                     <FormCell>
