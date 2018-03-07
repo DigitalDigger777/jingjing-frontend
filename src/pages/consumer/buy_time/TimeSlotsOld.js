@@ -2,11 +2,7 @@
  * Created by korman on 06.02.18.
  */
 import React from 'react';
-// import {Grids, Cells, Cell, CellBody, CellHeader} from 'react-weui';
-import { Grid, Row, Col } from 'react-flexbox-grid';
-import RaisedButton from 'material-ui/RaisedButton';
-import Divider from 'material-ui/Divider';
-
+import {Grids, Cells, Cell, CellBody, CellHeader} from 'react-weui';
 import Core from '../Core';
 import axios from 'axios';
 import Config from '../../../Config';
@@ -70,23 +66,23 @@ export default class TimeSlots extends React.Component {
 
     componentWillMount(){
         //check consumer login
-        // const userStorage = window.localStorage.getItem('user');
+        const userStorage = window.localStorage.getItem('user');
         window.localStorage.setItem('timeSlots', JSON.stringify({'deviceId':this.state.deviceId}));
 
-        // if (userStorage) {
-        //     const user = JSON.parse(userStorage);
-        //
-        //     if (user.role != 'ROLE_CONSUMER') {
-        //
-        //         window.location = '/consumer/login';
-        //
-        //     }
-        //
-        // } else {
-        //
-        //     window.location = '/consumer/login';
-        //
-        // }
+        if (userStorage) {
+            const user = JSON.parse(userStorage);
+
+            if (user.role != 'ROLE_CONSUMER') {
+
+                window.location = '/consumer/login';
+
+            }
+
+        } else {
+
+            window.location = '/consumer/login';
+
+        }
 
         if (this.state.deviceId != 0) {
             axios.get(this.state.baseUrl + 'device/load/' + this.state.deviceId)
@@ -132,34 +128,17 @@ export default class TimeSlots extends React.Component {
         if (this.state.showPage) {
             return (
                 <Core>
-                    <Grid style={{height: '92vh'}}>
-                        <Row>
-                            <Col style={{margin: '0 auto', marginTop: '100px'}}>
-                                <h1>$3.99 for 15 mins</h1>
-                            </Col>
-                        </Row>
-                        <Divider />
-                        <Row style={{marginTop: '100px'}}>
-                            <Col style={{margin: '0 auto'}}>
-                                <RaisedButton
-                                    label="Pay With Credit Card"
-                                    primary={true}
-                                    style={{width: '185px'}}
-                                />
-                            </Col>
-                            <Col style={{margin: '0 auto'}}>
-                                <RaisedButton
-                                    label="Pay with PayPal"
-                                    primary={true}
-                                    style={{width: '185px'}}
-                                    onClick={hours => this.buyTime(15)}
-                                />
-                            </Col>
-                        </Row>
-
-                    </Grid>
-
-
+                    <Cells>
+                        <Cell>
+                            <CellBody style={{textAlign: 'center'}}>
+                                <p style={{fontWeight: 'bold'}}>请选择需要的时间</p>
+                                <p>{this.state.item.shopperName}</p>
+                                <p>Room: {this.state.item.room}</p>
+                                <p>￥3 一小时</p>
+                            </CellBody>
+                        </Cell>
+                    </Cells>
+                    <Grids className={classes.page} data={this.state.data}/>
                 </Core>
             );
         } else {

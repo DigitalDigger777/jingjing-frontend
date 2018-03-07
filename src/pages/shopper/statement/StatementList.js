@@ -102,12 +102,12 @@ export default class StatementList extends React.Component {
                             return (
                                 <Preview key={key} style={{marginBottom: '20px'}}>
                                     <PreviewHeader>
-                                        <PreviewItem label="Income" value={`¥` + item[0].amount}/>
+                                        <PreviewItem label="Income" value={`$` + item[0].amount}/>
                                     </PreviewHeader>
                                     <PreviewBody>
                                         <PreviewItem label="Time" value={item.date}/>
                                         <PreviewItem label="Hours" value={item[0].hours.toString()}/>
-                                        <PreviewItem label="Rate" value={`¥` + item[0].rate + ` per hour`}/>
+                                        <PreviewItem label="Rate" value={`$` + item[0].rate + ` per hour`}/>
                                         <PreviewItem label="Room #" value={item[0].room.toString()}/>
                                     </PreviewBody>
                                     <PreviewFooter/>

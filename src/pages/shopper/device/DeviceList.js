@@ -69,7 +69,7 @@ class DeviceList extends React.Component {
     render() {
         return (
             <Core>
-                <Toolbar>
+                <Toolbar style={{position: 'fixed', width: '100%'}}>
                     <ToolbarGroup style={{width: '100%'}}>
                         <SearchBar
                             onChange={this.changeSearch.bind(this)}
@@ -83,7 +83,7 @@ class DeviceList extends React.Component {
                         />
                     </ToolbarGroup>
                 </Toolbar>
-                <Table selectable={false}>
+                <Table selectable={false} style={{marginBottom: '60px'}}>
                     <TableBody displayRowCheckbox={false} showRowHover={true}>
                         {this.state.items.map((item, key) => {
                             return (

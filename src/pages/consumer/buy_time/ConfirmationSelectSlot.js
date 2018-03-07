@@ -31,10 +31,10 @@ export default class ConfirmationSelectSlot extends React.Component {
             <Page>
                 <Panel>
 
-                    <PanelBody style={{ padding: '10px'}}>
+                    <PanelBody style={{ padding: '10px', textAlign: 'center', height: '100vh'}}>
                         <IconBox
                             icon={<Icon size="large" value="success"/>}
-                            title="You can turn on Purifier"
+                            title="You can turn on Massage"
                             desc={`The expire time is ` + this.state.lastBuy.timeEnd}
                             />
                     </PanelBody>

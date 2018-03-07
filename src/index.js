@@ -12,6 +12,7 @@ import 'weui/dist/style/weui.css';
 
 //system pages
 import Login from './pages/Login';
+import LoginPin from './pages/LoginPin';
 
 //admin pages
 import AdminShopperDetail from './pages/admin/shopper/ShopperDetail';
@@ -25,6 +26,8 @@ import AdminStatementList from './pages/admin/statement/StatementList';
 import ConsumerBuyHistory from './pages/consumer/buy_history/BuyHistory';
 import ConsumerConfirmationSelectSlot from './pages/consumer/buy_time/ConfirmationSelectSlot';
 import ConsumerBuyTimeSlots from './pages/consumer/buy_time/TimeSlots';
+import ConsumerPaymentCreditCard from './pages/consumer/buy_history/CreditCard';
+
 
 //shopper pages
 import ShopperDeviceList from './pages/shopper/device/DeviceList';
@@ -47,7 +50,7 @@ class Index extends React.Component {
                     <div>
                         {/*<Route exact path="/" component={Login}/>*/}
                         <Route exact path="/consumer/login" component={Login}/>
-                        <Route exact path="/shopper/login" component={Login}/>
+                        <Route exact path="/shopper/login" component={LoginPin}/>
                         <Route exact path="/admin/login" component={Login}/>
 
                         <Route exact path="/admin/shopper-detail/:id" component={AdminShopperDetail}/>
@@ -61,6 +64,7 @@ class Index extends React.Component {
 
                         <Route exact path="/consumer/buy-history" component={ConsumerBuyHistory}/>
                         <Route exact path="/consumer/buy-time-confirmation-select-slot" component={ConsumerConfirmationSelectSlot}/>
+                        <Route exact path="/consumer/payment/credit-card" component={ConsumerPaymentCreditCard}/>
                         {/*<Route exact path="/" component={ConsumerBuyTimeSlots}/>*/}
                         <Route exact path="/consumer/buy-time-slots/:deviceId" component={ConsumerBuyTimeSlots}/>
 
