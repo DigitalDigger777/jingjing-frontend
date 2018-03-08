@@ -129,10 +129,10 @@ export default class TimeSlots extends React.Component {
 
     render() {
         const {classes, children} = this.props;
-
+        let env = 'sandbox';
         let client = {
             //...
-            sandbox:    'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+            sandbox:    'AV9JY5sXuj7JIVsOntnj7-5KKwJFtwVHhlKILC9A-GYfB6cR5UPk6JzW7tRGB8bAt8GgtYeH6tpSQukB',
             production: '<insert production client id>'
         };
 
@@ -201,6 +201,7 @@ export default class TimeSlots extends React.Component {
                                     {/*onClick={hours => this.buyTime(15)}*/}
                                 {/*/>*/}
                                 <PayPalButton
+                                    env={env}
                                     client={client}
                                     payment={payment}
                                     commit={true}
