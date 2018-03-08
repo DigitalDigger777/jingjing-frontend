@@ -60,18 +60,18 @@ export default class Core extends React.Component {
             <Paper>
                 <Paper>
                     {this.props.children}
-                    <BottomNavigation selectedIndex={this.state.selectedIndex} style={{position: 'fixed', bottom: '0px'}}>
-                        <BottomNavigationItem
-                            label="Buy Time"
-                            icon={deviceHub}
-                            onClick={this.openBuyTime.bind(this)}
-                        />
-                        <BottomNavigationItem
-                            label="Buy History"
-                            icon={attachMoney}
-                            onClick={this.openBuyHistory.bind(this)}
-                        />
-                    </BottomNavigation>
+                    {/*<BottomNavigation selectedIndex={this.state.selectedIndex} style={{position: 'fixed', bottom: '0px'}}>*/}
+                        {/*<BottomNavigationItem*/}
+                            {/*label="Buy Time"*/}
+                            {/*icon={deviceHub}*/}
+                            {/*onClick={this.openBuyTime.bind(this)}*/}
+                        {/*/>*/}
+                        {/*<BottomNavigationItem*/}
+                            {/*label="Buy History"*/}
+                            {/*icon={attachMoney}*/}
+                            {/*onClick={this.openBuyHistory.bind(this)}*/}
+                        {/*/>*/}
+                    {/*</BottomNavigation>*/}
                 </Paper>
             </Paper>
         );
