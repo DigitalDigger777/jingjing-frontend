@@ -130,6 +130,14 @@ export default class TimeSlots extends React.Component {
     render() {
         const {classes, children} = this.props;
         let env = 'sandbox';
+        let style = {
+            label: 'paypal',
+                size:  'medium',    // small | medium | large | responsive
+                shape: 'rect',     // pill | rect
+                color: 'blue',     // gold | blue | silver | black
+                tagline: false
+        };
+
         let client = {
             //...
             sandbox:    'AV9JY5sXuj7JIVsOntnj7-5KKwJFtwVHhlKILC9A-GYfB6cR5UPk6JzW7tRGB8bAt8GgtYeH6tpSQukB',
@@ -204,9 +212,7 @@ export default class TimeSlots extends React.Component {
                                 {/*/>*/}
                                 <PayPalButton
                                     env={env}
-                                    shape="rect"
-                                    color="blue"
-                                    tagline="false"
+                                    style={style}
                                     client={client}
                                     payment={payment}
                                     commit={true}
