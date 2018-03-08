@@ -151,6 +151,8 @@ export default class TimeSlots extends React.Component {
 
         let onAuthorize = (data, actions) => {
             //...
+            const hours = 15;
+
             actions.payment.execute().then(() => {
                 axios.get(this.state.baseUrl + 'add-schedule', {
                     params: {
