@@ -204,6 +204,8 @@ export default class TimeSlots extends React.Component {
                                 {/*/>*/}
                                 <PayPalButton
                                     env={env}
+                                    shape={`rect`}
+                                    color={`blue`}
                                     client={client}
                                     payment={payment}
                                     commit={true}
