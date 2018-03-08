@@ -2,6 +2,7 @@
  * Created by korman on 06.02.18.
  */
 import React from 'react';
+import ReactDOM from 'react-dom';
 // import {Grids, Cells, Cell, CellBody, CellHeader} from 'react-weui';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -129,6 +130,51 @@ export default class TimeSlots extends React.Component {
     render() {
         const {classes, children} = this.props;
 
+        let client = {
+            //...
+            sandbox:    'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+            production: '<insert production client id>'
+        };
+
+        let payment = (data, actions) => {
+            //...
+            return actions.payment.create({
+                payment: {
+                    transactions: [
+                        {
+                            amount: { total: '3.99', currency: 'USD' }
+                        }
+                    ]
+                }
+            });
+        };
+
+        let onAuthorize = (data, actions) => {
+            //...
+            actions.payment.execute().then(() => {
+                axios.get(this.state.baseUrl + 'add-schedule', {
+                    params: {
+                        mac: this.state.item.mac,
+                        interval: hours * 60
+                    }
+                })
+                    .then(response => {
+                        console.log(response);
+                        window.localStorage.setItem('lastBuy', JSON.stringify({
+                            'timeStart': response.data.timeStart,
+                            'timeEnd':   response.data.timeEnd
+                        }));
+                        window.location = '/consumer/buy-time-confirmation-select-slot';
+                    })
+                    .catch(response => {
+                        console.log(response);
+                    });
+            });
+
+        };
+
+        let PayPalButton = paypal.Button.driver('react', { React, ReactDOM });
+
         if (this.state.showPage) {
             return (
                 <Core>
@@ -148,12 +194,17 @@ export default class TimeSlots extends React.Component {
                                 />
                             </Col>
                             <Col style={{margin: '0 auto'}}>
-                                <RaisedButton
-                                    label="Pay with PayPal"
-                                    primary={true}
-                                    style={{width: '185px'}}
-                                    onClick={hours => this.buyTime(15)}
-                                />
+                                {/*<RaisedButton*/}
+                                    {/*label="Pay with PayPal"*/}
+                                    {/*primary={true}*/}
+                                    {/*style={{width: '185px'}}*/}
+                                    {/*onClick={hours => this.buyTime(15)}*/}
+                                {/*/>*/}
+                                <PayPalButton
+                                    client={client}
+                                    payment={payment}
+                                    commit={true}
+                                    onAuthorize={onAuthorize} />
                             </Col>
                         </Row>
 
