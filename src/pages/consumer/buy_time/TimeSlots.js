@@ -25,6 +25,9 @@ const styles  = {
     page: {
         backgroundColor: '#EEE',
         paddingBottom: '100px'
+    },
+    paypalButtonContainer: {
+        background: '#000 !important'
     }
 };
 
@@ -132,10 +135,10 @@ export default class TimeSlots extends React.Component {
         let env = 'sandbox';
         let style = {
             label: 'paypal',
-                size:  'medium',    // small | medium | large | responsive
-                shape: 'rect',     // pill | rect
-                color: 'blue',     // gold | blue | silver | black
-                tagline: false
+            size:  'responsive',    // small | medium | large | responsive
+            shape: 'rect',     // pill | rect
+            color: 'blue',     // gold | blue | silver | black
+            tagline: false
         };
 
         let client = {
@@ -196,14 +199,14 @@ export default class TimeSlots extends React.Component {
                         </Row>
                         <Divider />
                         <Row style={{marginTop: '100px'}}>
-                            <Col style={{margin: '0 auto'}}>
+                            <Col lg={6} xs={12}>
                                 <RaisedButton
                                     label="Pay With Credit Card"
                                     primary={true}
-                                    style={{width: '185px'}}
+                                    style={{width: '100%'}}
                                 />
                             </Col>
-                            <Col style={{margin: '0 auto'}}>
+                            <Col lg={6} xs={12} style={{marginTop: '10px'}}>
                                 {/*<RaisedButton*/}
                                     {/*label="Pay with PayPal"*/}
                                     {/*primary={true}*/}
