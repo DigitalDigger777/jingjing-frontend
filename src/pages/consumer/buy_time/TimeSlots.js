@@ -130,6 +130,10 @@ export default class TimeSlots extends React.Component {
             });
     }
 
+    creditCard(){
+        window.location = '/consumer/payment/credit-card';
+    }
+
     render() {
         const {classes, children} = this.props;
         let env = 'sandbox';
@@ -204,6 +208,7 @@ export default class TimeSlots extends React.Component {
                                     label="Pay With Credit Card"
                                     primary={true}
                                     style={{width: '100%'}}
+                                    onClick={this.creditCard.bind(this)}
                                 />
                             </Col>
                             <Col lg={6} xs={12} style={{marginTop: '10px'}}>

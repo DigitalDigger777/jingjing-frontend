@@ -77,36 +77,12 @@ export default class CreditCard extends React.Component {
         }, 3000);
     }
 
-    login(){
-        axios.post(this.state.baseUrl + 'user/login', {
-                email: this.state.email,
-                password: this.state.password
+    pay(){
+        axios.post(this.state.baseUrl + 'pay-pal/direct-payment/pay', {
+
         })
             .then(response => {
                 //console.log(response);
-                const role = response.data.role;
-                window.localStorage.setItem('user', JSON.stringify(response.data));
-
-                switch (role)
-                {
-                    case 'ROLE_ADMIN':
-                            window.location = '/admin/shopper-list';
-                        break;
-                    case 'ROLE_CONSUMER':
-                            const timeSlotsStorage = window.localStorage.getItem('timeSlots');
-                            const timeSlots = JSON.parse(timeSlotsStorage);
-
-                            if (timeSlotsStorage) {
-                                window.location = '/consumer/buy-time-slots/' + timeSlots.deviceId;
-                            } else {
-                                window.location = '/consumer/buy-history';
-                            }
-
-                        break;
-                    case 'ROLE_SHOPPER':
-                            window.location = '/shopper/device-list';
-                        break;
-                }
             })
             .catch(error => {
                 console.log(error.response);
@@ -156,7 +132,7 @@ export default class CreditCard extends React.Component {
                         <TextField hintText="ZIP" onChange={ e => this.changeEmail(e)}/>
                     </div>
                     <div>
-                        <RaisedButton label="Pay" primary={true} onClick={this.login.bind(this)}/>
+                        <RaisedButton label="Pay" primary={true} onClick={this.pay.bind(this)}/>
                     </div>
 
                 </Paper>
