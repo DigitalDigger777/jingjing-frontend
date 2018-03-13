@@ -69,20 +69,20 @@ export default class TimeSlots extends React.Component {
         const userStorage = window.localStorage.getItem('user');
         window.localStorage.setItem('timeSlots', JSON.stringify({'deviceId':this.state.deviceId}));
 
-        if (userStorage) {
-            const user = JSON.parse(userStorage);
-
-            if (user.role != 'ROLE_CONSUMER') {
-
-                window.location = '/consumer/login';
-
-            }
-
-        } else {
-
-            window.location = '/consumer/login';
-
-        }
+        // if (userStorage) {
+        //     const user = JSON.parse(userStorage);
+        //
+        //     if (user.role != 'ROLE_CONSUMER') {
+        //
+        //         window.location = '/consumer/login';
+        //
+        //     }
+        //
+        // } else {
+        //
+        //     window.location = '/consumer/login';
+        //
+        // }
 
         if (this.state.deviceId != 0) {
             axios.get(this.state.baseUrl + 'device/load/' + this.state.deviceId)
