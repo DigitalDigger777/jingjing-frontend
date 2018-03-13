@@ -106,7 +106,7 @@ export default class TimeSlots extends React.Component {
         axios.get(this.state.baseUrl + 'add-schedule', {
             params: {
                 mac: this.state.item.mac,
-                interval: hours * 60
+                interval: hours * 60 * 60
             }
         })
             .then(response => {
