@@ -33,18 +33,18 @@ export default class TimeSlots extends React.Component {
     constructor(props){
         super(props);
         const data = [
-            {label: '￥3 1小时', style: styles.grid, onClick: hours => this.buyTime(1)},
-            {label: '￥6 2小时', style: styles.grid, onClick: hours => this.buyTime(2)},
-            {label: '￥9 3小时', style: styles.grid, onClick: hours => this.buyTime(3)},
-            {label: '￥12 4小时', style: styles.grid, onClick: hours => this.buyTime(4)},
-            {label: '￥15 5小时', style: styles.grid, onClick: hours => this.buyTime(5)},
-            {label: '￥18 6小时', style: styles.grid, onClick: hours => this.buyTime(6)},
-            {label: '￥21 7小时', style: styles.grid, onClick: hours => this.buyTime(7)},
-            {label: '￥24 8小时', style: styles.grid, onClick: hours => this.buyTime(8)},
-            {label: '￥27 9小时', style: styles.grid, onClick: hours => this.buyTime(9)},
-            {label: '￥30 10小时', style: styles.grid, onClick: hours => this.buyTime(10)},
-            {label: '￥33 11小时', style: styles.grid, onClick: hours => this.buyTime(11)},
-            {label: '￥36 12小时', style: styles.grid, onClick: hours => this.buyTime(12)}
+            {label: '￥3 1小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(1)},
+            {label: '￥6 2小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(2)},
+            {label: '￥9 3小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(3)},
+            {label: '￥12 4小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(4)},
+            {label: '￥15 5小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(5)},
+            {label: '￥18 6小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(6)},
+            {label: '￥21 7小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(7)},
+            {label: '￥24 8小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(8)},
+            {label: '￥27 9小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(9)},
+            {label: '￥30 10小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(10)},
+            {label: '￥33 11小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(11)},
+            {label: '￥36 12小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(12)}
         ];
 
         const config = new Config();
@@ -61,7 +61,7 @@ export default class TimeSlots extends React.Component {
             baseUrl: config.baseUrl
         };
 
-        this.buyTime = this.buyTime.bind(this);
+        this.selectPaymentSystem = this.selectPaymentSystem.bind(this);
     }
 
     componentWillMount(){
@@ -102,24 +102,16 @@ export default class TimeSlots extends React.Component {
         }
     }
 
-    buyTime(hours) {
-        axios.get(this.state.baseUrl + 'add-schedule', {
-            params: {
-                mac: this.state.item.mac,
-                interval: hours * 60 * 60
-            }
-        })
-            .then(response => {
-                console.log(response);
-                window.localStorage.setItem('lastBuy', JSON.stringify({
-                    'timeStart': response.data.timeStart,
-                    'timeEnd':   response.data.timeEnd
-                }));
-                window.location = '/consumer/buy-time-confirmation-select-slot';
-            })
-            .catch(response => {
-                console.log(response);
-            });
+    selectPaymentSystem(hours) {
+        let payment = {
+            hours: hours,
+            rate: 3,
+            room: this.state.item.room,
+            mac: this.state.item.mac
+        };
+
+        window.localStorage.setItem('payment', JSON.stringify(payment));
+        window.location = '/consumer/select-payment-system';
     }
 
     render() {

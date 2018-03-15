@@ -25,6 +25,7 @@ import AdminStatementList from './pages/admin/statement/StatementList';
 import ConsumerBuyHistory from './pages/consumer/buy_history/BuyHistory';
 import ConsumerConfirmationSelectSlot from './pages/consumer/buy_time/ConfirmationSelectSlot';
 import ConsumerBuyTimeSlots from './pages/consumer/buy_time/TimeSlots';
+import SelectPaymentSystem from './pages/consumer/buy_time/SelectPaymentSystem';
 
 //shopper pages
 import ShopperDeviceList from './pages/shopper/device/DeviceList';
@@ -59,6 +60,7 @@ class Index extends React.Component {
                         <Route exact path="/admin/invoice-list" component={AdminStatementList}/>
 
                         <Route exact path="/consumer/buy-history" component={ConsumerBuyHistory}/>
+                        <Route exact path="/consumer/select-payment-system" component={SelectPaymentSystem}/>
                         <Route exact path="/consumer/buy-time-confirmation-select-slot" component={ConsumerConfirmationSelectSlot}/>
                         {/*<Route exact path="/" component={ConsumerBuyTimeSlots}/>*/}
                         <Route exact path="/consumer/buy-time-slots/:deviceId" component={ConsumerBuyTimeSlots}/>
