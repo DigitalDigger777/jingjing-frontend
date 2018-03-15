@@ -131,6 +131,7 @@ export default class TimeSlots extends React.Component {
     }
 
     creditCard(){
+        window.localStorage.setItem('mac', JSON.stringify({'mac': this.state.item.mac}));
         window.location = '/consumer/payment/credit-card';
     }
 

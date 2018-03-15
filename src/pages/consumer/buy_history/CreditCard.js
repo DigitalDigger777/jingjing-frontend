@@ -45,8 +45,12 @@ export default class CreditCard extends React.Component {
 
         const config = new Config();
         this.state = {
-            email: '',
-            password: '',
+            firstName: '',
+            lastName: '',
+            creditCardType: '',
+            acct: '',
+            expDate: '',
+            cvv2: '',
             error: {
                 open: false,
                 message: ''
@@ -55,8 +59,7 @@ export default class CreditCard extends React.Component {
         };
 
         this.error = this.error.bind(this);
-        this.changeEmail = this.changeEmail.bind(this);
-        this.changePassword = this.changePassword.bind(this);
+        this.change = this.change.bind(this);
     }
 
     error(message){
@@ -79,10 +82,37 @@ export default class CreditCard extends React.Component {
 
     pay(){
         axios.post(this.state.baseUrl + 'pay-pal/direct-payment/pay', {
-
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            creditCardType: this.state.creditCardType,
+            acct: this.state.acct,
+            expDate: this.state.expDate,
+            cvv2: this.state.cvv2
         })
             .then(response => {
-                //console.log(response);
+                console.log(response);
+                //window.location = '/consumer/buy-time-confirmation-select-slot';
+                const hours = 15;
+                const item = JSON.parse(window.localStorage.getItem('mac'));
+                window.localStorage.removeItem('mac');
+
+                axios.get(this.state.baseUrl + 'add-schedule', {
+                    params: {
+                        mac: item.mac,
+                        interval: hours * 60
+                    }
+                })
+                    .then(response => {
+                        console.log(response);
+                        window.localStorage.setItem('lastBuy', JSON.stringify({
+                            'timeStart': response.data.timeStart,
+                            'timeEnd':   response.data.timeEnd
+                        }));
+                        window.location = '/consumer/buy-time-confirmation-select-slot';
+                    })
+                    .catch(response => {
+                        console.log(response);
+                    });
             })
             .catch(error => {
                 console.log(error.response);
@@ -92,19 +122,18 @@ export default class CreditCard extends React.Component {
         //window.location = 'shopper/device-list';
     }
 
-    changeEmail(e) {
-        this.setState({
-            email: e.target.value
-        });
+    change(e, type) {
+        let state = this.state;
+
+        if (type == 'expDate') {
+            state[type] = e.target.value.replace('/', '').trim();
+        } else {
+            state[type] = e.target.value;
+        }
+
+        this.setState(state);
     }
 
-    changePassword(e) {
-
-        this.setState({
-            password: e.target.value
-        });
-        //this.state.password = e.target.value;
-    }
 
     onSubmit(){
 
@@ -117,20 +146,24 @@ export default class CreditCard extends React.Component {
             <Paper className={classes.loginForm}>
                 <Paper className="containerLoginForm" zDepth={4}>
                     <div>
-                        <TextField hintText="Name on card" onChange={ e => this.changeEmail(e)}/>
+                        <TextField hintText="First Name" onChange={ (e, type) => this.change(e, 'firstName')}/>
                     </div>
                     <div>
-                        <TextField hintText="Account number" onChange={ e => this.changeEmail(e)}/>
+                        <TextField hintText="Last Name" onChange={ (e, type) => this.change(e, 'lastName')}/>
                     </div>
                     <div>
-                        <TextField hintText="MM / YY" onChange={ e => this.changeEmail(e)}/>
+                        <TextField hintText="Credit Card Type" onChange={ (e, type) => this.change(e, 'creditCardType')}/>
                     </div>
                     <div>
-                        <TextField hintText="CVC" type="password"  onChange={ e => this.changePassword(e)}/>
+                        <TextField hintText="Account number" onChange={ (e, type) => this.change(e, 'acct')}/>
                     </div>
                     <div>
-                        <TextField hintText="ZIP" onChange={ e => this.changeEmail(e)}/>
+                        <TextField hintText="MM / YY" onChange={ (e, type) => this.change(e, 'expDate')}/>
                     </div>
+                    <div>
+                        <TextField hintText="CVV2" type="password" onChange={ (e, type) => this.change(e, 'cvv2')}/>
+                    </div>
+
                     <div>
                         <RaisedButton label="Pay" primary={true} onClick={this.pay.bind(this)}/>
                     </div>
