@@ -47,7 +47,7 @@ export default class ConfirmationSelectSlot extends React.Component {
         const amount    = this.state.amount;
 
         if (typeof mac != 'undefined' && typeof interval != 'undefined' && typeof amount != 'undefined') {
-            axios.get(this.baseUrl + 'add-schedule', {
+            axios.get(this.state.baseUrl + 'add-schedule', {
                 params: {
                     mac: mac,
                     interval: interval
