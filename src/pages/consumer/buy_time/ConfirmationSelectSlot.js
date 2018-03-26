@@ -32,8 +32,22 @@ export default class ConfirmationSelectSlot extends React.Component {
         const interval  = props.match.params.interval;
         const amount    = props.match.params.amount;
 
+        this.state = {
+            lastBuy: lastBuy,
+            mac: mac,
+            interval: interval,
+            amount: amount,
+            baseUrl: config.baseUrl
+        };
+    }
+
+    componentWillMount() {
+        const mac       = this.state.mac;
+        const interval  = this.state.interval;
+        const amount    = this.state.amount;
+
         if (typeof mac != 'undefined' && typeof interval != 'undefined' && typeof amount != 'undefined') {
-            axios.get(config.baseUrl + 'add-schedule', {
+            axios.get(this.baseUrl + 'add-schedule', {
                 params: {
                     mac: mac,
                     interval: interval
@@ -45,6 +59,11 @@ export default class ConfirmationSelectSlot extends React.Component {
                         'timeStart': response.data.timeStart,
                         'timeEnd':   response.data.timeEnd
                     }));
+                    const lastBuy = JSON.parse(window.localStorage.getItem('lastBuy'));
+
+                    this.setState({
+                        lastBuy: lastBuy
+                    });
                     //window.location = '/consumer/buy-time-confirmation-select-slot';
                 })
                 .catch(response => {
@@ -52,9 +71,6 @@ export default class ConfirmationSelectSlot extends React.Component {
                 });
         }
 
-        this.state = {
-            lastBuy: lastBuy
-        };
     }
 
     render() {
