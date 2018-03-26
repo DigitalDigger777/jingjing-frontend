@@ -37,6 +37,7 @@ export default class ConfirmationSelectSlot extends React.Component {
             mac: mac,
             interval: interval,
             amount: amount,
+            showPage: false,
             baseUrl: config.baseUrl
         };
     }
@@ -62,7 +63,8 @@ export default class ConfirmationSelectSlot extends React.Component {
                     const lastBuy = JSON.parse(window.localStorage.getItem('lastBuy'));
 
                     this.setState({
-                        lastBuy: lastBuy
+                        lastBuy: lastBuy,
+                        showPage: true
                     });
                     //window.location = '/consumer/buy-time-confirmation-select-slot';
                 })
@@ -74,19 +76,29 @@ export default class ConfirmationSelectSlot extends React.Component {
     }
 
     render() {
-        return (
-            <Page>
-                <Panel>
+        if (this.state.showPage) {
+            return (
+                <Page>
+                    <Panel>
 
-                    <PanelBody style={{ padding: '10px'}}>
-                        <IconBox
-                            icon={<Icon size="large" value="success"/>}
-                            title="You can turn on Purifier"
-                            desc={`The expire time is ` + this.state.lastBuy.timeEnd}
+                        <PanelBody style={{padding: '10px'}}>
+                            <IconBox
+                                icon={<Icon size="large" value="success"/>}
+                                title="You can turn on Purifier"
+                                desc={`The expire time is ` + this.state.lastBuy.timeEnd}
                             />
-                    </PanelBody>
-                </Panel>
-            </Page>
-        );
+                        </PanelBody>
+                    </Panel>
+                </Page>
+            );
+        } else {
+            return (
+                <Page>
+                    <Panel>
+                        Load...
+                    </Panel>
+                </Page>
+            );
+        }
     };
 }
