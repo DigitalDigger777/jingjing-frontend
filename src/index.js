@@ -45,7 +45,7 @@ class Index extends React.Component {
         return(
                 <Router history={history}>
                     <div>
-                        {/*<Route exact path="/" component={Login}/>*/}
+                            {/*<Route exact path="/" component={Login}/>*/}
                         <Route exact path="/consumer/login" component={Login}/>
                         <Route exact path="/shopper/login" component={Login}/>
                         <Route exact path="/admin/login" component={Login}/>
@@ -62,6 +62,7 @@ class Index extends React.Component {
                         <Route exact path="/consumer/buy-history" component={ConsumerBuyHistory}/>
                         <Route exact path="/consumer/select-payment-system" component={SelectPaymentSystem}/>
                         <Route exact path="/consumer/buy-time-confirmation-select-slot" component={ConsumerConfirmationSelectSlot}/>
+                        <Route exact path="/consumer/buy-time-confirmation-select-slot/:mac/:interval/:amount" component={ConsumerConfirmationSelectSlot}/>
                         {/*<Route exact path="/" component={ConsumerBuyTimeSlots}/>*/}
                         <Route exact path="/consumer/buy-time-slots/:deviceId" component={ConsumerBuyTimeSlots}/>
 

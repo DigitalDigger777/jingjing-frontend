@@ -45,11 +45,17 @@ export default class SelectPaymentSystem extends React.Component {
 
         this.state = {
             payment: JSON.parse(window.localStorage.getItem('payment')),
+            paymentSystem: "1",
             showPage: false,
             baseUrl: config.baseUrl
         };
 
-        this.buyTime = this.buyTime.bind(this);
+        this.buyTime             = this.buyTime.bind(this);
+        this.buyAliPay           = this.buyAliPay.bind(this);
+        this.buyWeChat           = this.buyWeChat.bind(this);
+        this.buy                 = this.buy.bind(this);
+        this.changePaymentSystem = this.changePaymentSystem.bind(this);
+
     }
 
     componentDidMount(){
@@ -79,6 +85,65 @@ export default class SelectPaymentSystem extends React.Component {
             });
     }
 
+    buyAliPay() {
+        window.location = this.state.baseUrl + 'payment/alipay/send?amount=' + (this.state.payment.rate * this.state.payment.hours);
+        // axios.get(this.state.baseUrl + 'payment/alipay/send', {
+        //     params: {
+        //         mac: this.state.payment.mac,
+        //         interval: this.state.payment.hours * 60 * 60
+        //     }
+        // })
+        //     .then(response => {
+        //         console.log(response);
+        //     })
+        //     .catch(response => {
+        //         console.log(response);
+        //     });
+    }
+
+    buyWeChat() {
+        window.location = this.state.baseUrl + 'payment/wechat/send?amount=' +
+            (this.state.payment.rate * this.state.payment.hours) +
+            '&mac=' + this.state.payment.mac +
+            '&interval=' + this.state.payment.hours * 60 * 60;
+
+        // axios.get(this.state.baseUrl + 'payment/wechat/send', {
+        //     params: {
+        //         mac: this.state.payment.mac,
+        //         interval: this.state.payment.hours * 60 * 60
+        //     }
+        // })
+        //     .then(response => {
+        //         console.log(response);
+        //     })
+        //     .catch(response => {
+        //         console.log(response);
+        //     });
+    }
+
+    buy() {
+        switch (this.state.paymentSystem)
+        {
+            case "1":
+                    this.buyAliPay();
+                    //console.log(1);
+                break;
+            case "2":
+                    this.buyWeChat();
+                    //console.log(2);
+                break;
+        }
+    }
+
+    changePaymentSystem(e){
+        this.setState({
+            paymentSystem: e.target.value
+        });
+
+        // console.log(e.target.value, this.state.paymentSystem);
+
+    }
+
     render() {
         const {classes, children} = this.props;
 
@@ -99,17 +164,17 @@ export default class SelectPaymentSystem extends React.Component {
                         <FormCell radio>
                             <CellBody>支付宝</CellBody>
                             <CellFooter>
-                                <Radio name="radio1" value="1" defaultChecked/>
+                                <Radio name="radio1" value="1" defaultChecked onChange={e => this.changePaymentSystem(e)}/>
                             </CellFooter>
                         </FormCell>
                         <FormCell radio>
                             <CellBody>微信</CellBody>
                             <CellFooter>
-                                <Radio name="radio1" value="2"/>
+                                <Radio name="radio1" value="2" onChange={e => this.changePaymentSystem(e)}/>
                             </CellFooter>
                         </FormCell>
                         <FormCell>
-                            <Button onClick={this.buyTime.bind(this)}>购买</Button>
+                            <Button onClick={this.buy.bind(this)}>购买</Button>
                         </FormCell>
                     </Form>
                 </Core>
