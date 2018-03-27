@@ -102,23 +102,25 @@ export default class SelectPaymentSystem extends React.Component {
     }
 
     buyWeChat() {
-        window.location = this.state.baseUrl + 'payment/wechat/send?amount=' +
-            (this.state.payment.rate * this.state.payment.hours) +
-            '&mac=' + this.state.payment.mac +
-            '&interval=' + this.state.payment.hours * 60 * 60;
+        // window.location = this.state.baseUrl + 'payment/wechat/send?amount=' +
+        //     (this.state.payment.rate * this.state.payment.hours) +
+        //     '&mac=' + this.state.payment.mac +
+        //     '&interval=' + this.state.payment.hours * 60 * 60;
 
-        // axios.get(this.state.baseUrl + 'payment/wechat/send', {
-        //     params: {
-        //         mac: this.state.payment.mac,
-        //         interval: this.state.payment.hours * 60 * 60
-        //     }
-        // })
-        //     .then(response => {
-        //         console.log(response);
-        //     })
-        //     .catch(response => {
-        //         console.log(response);
-        //     });
+        axios.get(this.state.baseUrl + 'payment/wechat/send', {
+            params: {
+                mac: this.state.payment.mac,
+                interval: this.state.payment.hours * 60 * 60,
+                amount: this.state.payment.rate * this.state.payment.hours
+            }
+        })
+            .then(response => {
+                console.log(response.data.mwebUrl);
+                window.location = response.data.mwebUrl;
+            })
+            .catch(response => {
+                console.log(response);
+            });
     }
 
     buy() {
