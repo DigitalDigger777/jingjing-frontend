@@ -37,6 +37,7 @@ import ShopperStatementList from './pages/shopper/statement/StatementList';
 import TesterLogin from './pages/tester/Login';
 import TesterDeviceList from './pages/tester/device/DeviceList';
 import TesterDeviceDetail from './pages/tester/device/DeviceDetail';
+import TesterDeviceTest from './pages/tester/device/DeviceTest';
 
 
 import { Router, Route } from 'react-router-dom';
@@ -84,6 +85,7 @@ class Index extends React.Component {
 
                         <Route exact path="/tester/device-list" component={TesterDeviceList}/>
                         <Route exact path="/tester/device-detail/:id" component={TesterDeviceDetail}/>
+                        <Route exact path="/tester/device-test/:id" component={TesterDeviceTest}/>
 
                     </div>
                 </Router>

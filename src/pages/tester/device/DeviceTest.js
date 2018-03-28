@@ -32,7 +32,8 @@ const styles  = {
 
 @injectSheet(styles)
 
-export default class DeviceDetail extends React.Component {
+
+export default class DeviceTest extends React.Component {
 
     constructor(props){
         super(props);
@@ -98,47 +99,28 @@ export default class DeviceDetail extends React.Component {
                 <CellsTitle>Purifiers Detail</CellsTitle>
                 <Form>
                     <FormCell>
-                        <CellHeader>
-                            <Label style={{color: '#999999', marginRight: '10px'}}>Add time</Label>
-                        </CellHeader>
                         <CellBody>
-                            <Input type="text" placeholder="Add time" value={this.state.item.date} disabled />
-                        </CellBody>
-                    </FormCell>
-                    <FormCell>
-                        <CellHeader>
-                            <Label style={{color: '#999999', marginRight: '10px'}}>Test time</Label>
-                        </CellHeader>
-                        <CellBody>
-                            <Input type="text" placeholder="Test time" value={this.state.item.date} disabled />
-                        </CellBody>
-                    </FormCell>
-                    <FormCell>
-                        <CellHeader>
-                            <Label style={{color: '#999999', marginRight: '10px'}}>CurrentStatus</Label>
-                        </CellHeader>
-                        <CellBody>
-                            <Input type="text" placeholder="Current Status" value={this.state.item.status} disabled />
-                        </CellBody>
-                    </FormCell>
-                    <FormCell>
-                        <CellHeader>
-                            <Label style={{color: '#999999', marginRight: '10px'}}>MAC address</Label>
-                        </CellHeader>
-                        <CellBody>
-                            <Input type="text" disabled  value={this.state.item.mac} />
+                            <h1>Purifier {this.state.item.id}</h1>
                         </CellBody>
                     </FormCell>
                     <FormCell>
                         <CellBody>
-                            <QRCode value={this.state.QRUrl} size="128"/>
-                            <br/>
-                            #{this.state.item.id}
+                            <h4>Status: Open</h4>
                         </CellBody>
                     </FormCell>
                     <FormCell>
                         <CellBody>
-                            <Button type="primary" plain>Test Success</Button>
+                            <Button type="primary" plain>Open</Button>
+                        </CellBody>
+                    </FormCell>
+                    <FormCell>
+                        <CellBody>
+                            <Button type="primary" plain>Close</Button>
+                        </CellBody>
+                    </FormCell>
+                    <FormCell>
+                        <CellBody>
+                            <Button type="primary">Test Passed</Button>
                         </CellBody>
                     </FormCell>
                 </Form>

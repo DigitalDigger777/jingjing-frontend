@@ -50,7 +50,7 @@ class DeviceList extends React.Component {
     }
 
     openDeviceDetail(id){
-        window.location = '/shopper/device-detail/' + id;
+        window.location = '/tester/device-detail/' + id;
     }
 
     startTest(e, id) {
