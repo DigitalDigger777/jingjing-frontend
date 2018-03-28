@@ -1,5 +1,7 @@
 /**
  * Created by korman on 06.02.18.
+ *
+ * This component is deprecated.
  */
 import React from 'react';
 import {

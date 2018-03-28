@@ -48,9 +48,20 @@ export default class TimeSlots extends React.Component {
         ];
 
         const config = new Config();
+        let showError = false;
+        let paymentSystem = '';
+        let deviceId = 0;
+
+        if (typeof props.match.params.deviceId == 'undefined' || typeof props.match.params.paymentSystem == 'undefined') {
+            showError = true;
+        } else {
+            paymentSystem = props.match.params.paymentSystem;
+            deviceId = props.match.params.deviceId;
+        }
 
         this.state = {
-            deviceId: typeof props.match.params.deviceId != 'undefined' ? props.match.params.deviceId : 0,
+            deviceId: deviceId,
+            paymentSystem: paymentSystem,
             data: data,
             item: {
                 shopperId: 0,
@@ -58,6 +69,7 @@ export default class TimeSlots extends React.Component {
                 room: 0
             },
             showPage: false,
+            showError: showError,
             baseUrl: config.baseUrl
         };
 
@@ -118,21 +130,33 @@ export default class TimeSlots extends React.Component {
         const {classes, children} = this.props;
 
         if (this.state.showPage) {
-            return (
-                <Core>
-                    <Cells>
-                        <Cell>
-                            <CellBody style={{textAlign: 'center'}}>
-                                <p style={{fontWeight: 'bold'}}>请选择需要的时间</p>
-                                <p>{this.state.item.shopperName}</p>
-                                <p>Room: {this.state.item.room}</p>
-                                <p>￥3 一小时</p>
-                            </CellBody>
-                        </Cell>
-                    </Cells>
-                    <Grids className={classes.page} data={this.state.data}/>
-                </Core>
-            );
+            if (!this.state.showError) {
+                return (
+                    <Core>
+                        <Cells>
+                            <Cell>
+                                <CellBody style={{textAlign: 'center'}}>
+                                    <p style={{fontWeight: 'bold'}}>请选择需要的时间</p>
+                                    <p>{this.state.item.shopperName}</p>
+                                    <p>Room: {this.state.item.room}</p>
+                                    <p>￥3 一小时</p>
+                                </CellBody>
+                            </Cell>
+                        </Cells>
+                        <Grids className={classes.page} data={this.state.data}/>
+                    </Core>
+                );
+            } else {
+                return (<Core>
+                            <Cells>
+                                <Cell>
+                                    <CellBody style={{textAlign: 'center'}}>
+                                        Incorrect request
+                                    </CellBody>
+                                </Cell>
+                            </Cells>
+                        </Core>)
+            }
         } else {
             return (
                 <Core>
