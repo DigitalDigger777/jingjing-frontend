@@ -67,10 +67,12 @@ class DeviceList extends React.Component {
                 />
                 <Cells style={{paddingBottom: '100px'}}>
                     {this.state.items.map((item, key) => {
+                        const date = item[1];
+
                         return (
-                            <Cell key={key} access onClick={(id) => this.openDeviceDetail(item.id)}>
-                                <CellBody>{item.name}</CellBody>
-                                <CellFooter>{item.room}</CellFooter>
+                            <Cell key={key} access onClick={(id) => this.openDeviceDetail(item[0].id)}>
+                                <CellBody>{item[0].name}</CellBody>
+                                <CellFooter>{item[0].room}</CellFooter>
                             </Cell>
                         );
                     })}

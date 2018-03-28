@@ -33,8 +33,16 @@ import ShopperDeviceDetail from './pages/shopper/device/DeviceDetail';
 import ShopperStatementList from './pages/shopper/statement/StatementList';
 
 
+//tester pages
+import TesterLogin from './pages/tester/Login';
+import TesterDeviceList from './pages/tester/device/DeviceList';
+import TesterDeviceDetail from './pages/tester/device/DeviceDetail';
+
+
 import { Router, Route } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
+
+
 
 const history = createBrowserHistory();
 
@@ -46,9 +54,11 @@ class Index extends React.Component {
                 <Router history={history}>
                     <div>
                             {/*<Route exact path="/" component={Login}/>*/}
+
                         <Route exact path="/consumer/login" component={Login}/>
                         <Route exact path="/shopper/login" component={Login}/>
                         <Route exact path="/admin/login" component={Login}/>
+                        <Route exact path="/tester/login" component={TesterLogin}/>
 
                         <Route exact path="/admin/shopper-detail/:id" component={AdminShopperDetail}/>
                         <Route exact path="/admin/shopper-form" component={AdminShopperForm}/>
@@ -66,10 +76,15 @@ class Index extends React.Component {
                         <Route exact path="/consumer/buy-time-confirmation-select-slot/:mac/:interval/:amount" component={ConsumerConfirmationSelectSlot}/>
                         {/*<Route exact path="/" component={ConsumerBuyTimeSlots}/>*/}
                         <Route exact path="/consumer/buy-time-slots/:deviceId" component={ConsumerBuyTimeSlots}/>
+                        <Route exact path="/consumer/buy-time-slots/:paymentSystem/:deviceId" component={ConsumerBuyTimeSlots}/>
 
                         <Route exact path="/shopper/device-list" component={ShopperDeviceList}/>
                         <Route exact path="/shopper/device-detail/:id" component={ShopperDeviceDetail}/>
                         <Route exact path="/shopper/statement-list" component={ShopperStatementList}/>
+
+                        <Route exact path="/tester/device-list" component={TesterDeviceList}/>
+                        <Route exact path="/tester/device-detail/:id" component={TesterDeviceDetail}/>
+
                     </div>
                 </Router>
         );
