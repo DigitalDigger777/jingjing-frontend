@@ -151,7 +151,11 @@ export default class TimeSlots extends React.Component {
 
         window.localStorage.setItem('payment', JSON.stringify(payment));
 
-        switch (this.state)
+        const paymentSystem = this.state.paymentSystem;
+        const deviceId = this.state.deviceId;
+        const amount = payment.rate * payment.hours;
+
+        switch (paymentSystem)
         {
             case 'alipay':
                     //TODO: here start payment process with Alipay
