@@ -130,39 +130,39 @@ export default class TimeSlots extends React.Component {
         const {classes, children} = this.props;
 
         if (this.state.showPage) {
-            if (!this.state.showError) {
-                return (
-                    <Core>
-                        <Cells>
-                            <Cell>
-                                <CellBody style={{textAlign: 'center'}}>
-                                    <p style={{fontWeight: 'bold'}}>请选择需要的时间</p>
-                                    <p>{this.state.item.shopperName}</p>
-                                    <p>Room: {this.state.item.room}</p>
-                                    <p>￥3 一小时</p>
-                                </CellBody>
-                            </Cell>
-                        </Cells>
-                        <Grids className={classes.page} data={this.state.data}/>
-                    </Core>
-                );
-            } else {
-                return (<Core>
-                            <Cells>
-                                <Cell>
-                                    <CellBody style={{textAlign: 'center'}}>
-                                        Incorrect request
-                                    </CellBody>
-                                </Cell>
-                            </Cells>
-                        </Core>)
-            }
-        } else {
+            return (
+                <Core>
+                    <Cells>
+                        <Cell>
+                            <CellBody style={{textAlign: 'center'}}>
+                                <p style={{fontWeight: 'bold'}}>请选择需要的时间</p>
+                                <p>{this.state.item.shopperName}</p>
+                                <p>Room: {this.state.item.room}</p>
+                                <p>￥3 一小时</p>
+                            </CellBody>
+                        </Cell>
+                    </Cells>
+                    <Grids className={classes.page} data={this.state.data}/>
+                </Core>
+            );
+        } else if (!this.state.showError){
             return (
                 <Core>
                     Load...
                 </Core>
             );
+        }
+
+        if (this.state.showError) {
+            return (<Core>
+                <Cells>
+                    <Cell>
+                        <CellBody style={{textAlign: 'center'}}>
+                            Incorrect request
+                        </CellBody>
+                    </Cell>
+                </Cells>
+            </Core>)
         }
     };
 }
