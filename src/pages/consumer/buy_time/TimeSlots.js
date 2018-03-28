@@ -30,21 +30,25 @@ const styles  = {
 
 export default class TimeSlots extends React.Component {
 
+    /**
+     *
+     * @param props
+     */
     constructor(props){
         super(props);
         const data = [
-            {label: '￥3 1小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(1)},
-            {label: '￥6 2小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(2)},
-            {label: '￥9 3小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(3)},
-            {label: '￥12 4小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(4)},
-            {label: '￥15 5小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(5)},
-            {label: '￥18 6小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(6)},
-            {label: '￥21 7小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(7)},
-            {label: '￥24 8小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(8)},
-            {label: '￥27 9小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(9)},
-            {label: '￥30 10小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(10)},
-            {label: '￥33 11小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(11)},
-            {label: '￥36 12小时', style: styles.grid, onClick: hours => this.selectPaymentSystem(12)}
+            {label: '￥3 1小时', style: styles.grid, onClick: hours => this.pay(1)},
+            {label: '￥6 2小时', style: styles.grid, onClick: hours => this.pay(2)},
+            {label: '￥9 3小时', style: styles.grid, onClick: hours => this.pay(3)},
+            {label: '￥12 4小时', style: styles.grid, onClick: hours => this.pay(4)},
+            {label: '￥15 5小时', style: styles.grid, onClick: hours => this.pay(5)},
+            {label: '￥18 6小时', style: styles.grid, onClick: hours => this.pay(6)},
+            {label: '￥21 7小时', style: styles.grid, onClick: hours => this.pay(7)},
+            {label: '￥24 8小时', style: styles.grid, onClick: hours => this.pay(8)},
+            {label: '￥27 9小时', style: styles.grid, onClick: hours => this.pay(9)},
+            {label: '￥30 10小时', style: styles.grid, onClick: hours => this.pay(10)},
+            {label: '￥33 11小时', style: styles.grid, onClick: hours => this.pay(11)},
+            {label: '￥36 12小时', style: styles.grid, onClick: hours => this.pay(12)}
         ];
 
         const config = new Config();
@@ -114,6 +118,12 @@ export default class TimeSlots extends React.Component {
         }
     }
 
+    /**
+     * Select payment system.
+     *
+     * @param hours
+     * @deprecated this method is deprecated because we remove select payment system
+     */
     selectPaymentSystem(hours) {
         let payment = {
             hours: hours,
@@ -126,6 +136,37 @@ export default class TimeSlots extends React.Component {
         window.location = '/consumer/select-payment-system';
     }
 
+    /**
+     * Start payment process with payment system Alipay or WeChat
+     *
+     * @param hours
+     */
+    pay(hours){
+        let payment = {
+            hours: hours,
+            rate: 3,
+            room: this.state.item.room,
+            mac: this.state.item.mac
+        };
+
+        window.localStorage.setItem('payment', JSON.stringify(payment));
+
+        switch (this.state)
+        {
+            case 'alipay':
+                    //TODO: here start payment process with Alipay
+                break;
+            case 'wechat':
+                    //TODO: here start payment process with WeChat
+                break;
+        }
+    }
+
+    /**
+     * Render component.
+     *
+     * @returns {XML}
+     */
     render() {
         const {classes, children} = this.props;
 
